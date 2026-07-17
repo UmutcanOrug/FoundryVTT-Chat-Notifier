@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1
+
+- Ayar penceresine her ekran boyutunda çalışan kaydırılabilir içerik ve daima görünür kayıt alanı eklendi.
+- Ses alanları Foundry VTT V13'ün yerleşik ses dosyası seçicisine geçirildi; Data klasörüne yüklenen sesler doğrudan seçilebilir.
+- Tam karakter adının yanı sıra ilk ad da otomatik bahsetme adı olarak algılanır.
+- Adın sonuna ek veya başka harfler geldiğinde de eşleşme yapılır; örneğin `Alaric`, `Alaric'e` ve `Alaricson` aynı özel sesi tetikler.
+
 ## 0.2.0
 
 - GM tarafından yönetilen dünya normal ve bahsetme sesi varsayılanları eklendi.

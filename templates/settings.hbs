@@ -1,4 +1,5 @@
 <form class="icn-settings-form">
+  <div class="icn-settings-scroll" data-scrollable>
   <div class="icn-scene-rule">
     <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
     <div>
@@ -30,10 +31,7 @@
     <div class="icn-field">
       <label for="icn-world-normal-sound">{{localize "ICN.Settings.WorldNormalSound.Name"}}</label>
       <div class="icn-input-actions">
-        <input id="icn-world-normal-sound" type="text" name="worldNormalSound" value="{{worldNormalSound}}">
-        <button type="button" data-file-picker="worldNormalSound" data-tooltip="{{localize "ICN.Settings.Browse"}}" aria-label="{{localize "ICN.Settings.Browse"}}">
-          <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
-        </button>
+        <file-picker id="icn-world-normal-sound" name="worldNormalSound" type="audio" value="{{worldNormalSound}}"></file-picker>
         <button type="button" data-test-world-sound="normal" data-tooltip="{{localize "ICN.Settings.Test"}}" aria-label="{{localize "ICN.Settings.Test"}}">
           <i class="fa-solid fa-play" aria-hidden="true"></i>
         </button>
@@ -47,10 +45,7 @@
     <div class="icn-field">
       <label for="icn-world-mention-sound">{{localize "ICN.Settings.WorldMentionSound.Name"}}</label>
       <div class="icn-input-actions">
-        <input id="icn-world-mention-sound" type="text" name="worldMentionSound" value="{{worldMentionSound}}">
-        <button type="button" data-file-picker="worldMentionSound" data-tooltip="{{localize "ICN.Settings.Browse"}}" aria-label="{{localize "ICN.Settings.Browse"}}">
-          <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
-        </button>
+        <file-picker id="icn-world-mention-sound" name="worldMentionSound" type="audio" value="{{worldMentionSound}}"></file-picker>
         <button type="button" data-test-world-sound="mention" data-tooltip="{{localize "ICN.Settings.Test"}}" aria-label="{{localize "ICN.Settings.Test"}}">
           <i class="fa-solid fa-play" aria-hidden="true"></i>
         </button>
@@ -86,10 +81,7 @@
     <div class="icn-field">
       <label for="icn-normal-sound">{{localize "ICN.Settings.NormalSound.Name"}}</label>
       <div class="icn-input-actions">
-        <input id="icn-normal-sound" type="text" name="normalSound" value="{{normalSound}}">
-        <button type="button" data-file-picker="normalSound" data-tooltip="{{localize "ICN.Settings.Browse"}}" aria-label="{{localize "ICN.Settings.Browse"}}">
-          <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
-        </button>
+        <file-picker id="icn-normal-sound" name="normalSound" type="audio" value="{{normalSound}}"></file-picker>
         <button type="button" data-test-sound="normal" data-tooltip="{{localize "ICN.Settings.Test"}}" aria-label="{{localize "ICN.Settings.Test"}}">
           <i class="fa-solid fa-play" aria-hidden="true"></i>
         </button>
@@ -133,10 +125,7 @@
       <div class="icn-field">
         <label for="icn-mention-sound">{{localize "ICN.Settings.MentionSound.Name"}}</label>
         <div class="icn-input-actions">
-          <input id="icn-mention-sound" type="text" name="mentionSound" value="{{mentionSound}}">
-          <button type="button" data-file-picker="mentionSound" data-tooltip="{{localize "ICN.Settings.Browse"}}" aria-label="{{localize "ICN.Settings.Browse"}}">
-            <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
-          </button>
+          <file-picker id="icn-mention-sound" name="mentionSound" type="audio" value="{{mentionSound}}"></file-picker>
           <button type="button" data-test-sound="mention" data-tooltip="{{localize "ICN.Settings.Test"}}" aria-label="{{localize "ICN.Settings.Test"}}">
             <i class="fa-solid fa-play" aria-hidden="true"></i>
           </button>
@@ -149,6 +138,7 @@
       </div>
     </div>
   </fieldset>
+  </div>
 
   <footer>
     <button type="submit">

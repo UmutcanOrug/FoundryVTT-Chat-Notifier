@@ -32,11 +32,12 @@ class ICChatNotifierSettings extends HandlebarsApplicationMixin(ApplicationV2) {
     tag: "section",
     window: {
       title: "ICN.Settings.WindowTitle",
-      icon: "fa-solid fa-bell"
+      icon: "fa-solid fa-bell",
+      resizable: true
     },
     position: {
       width: 560,
-      height: "auto"
+      height: 720
     }
   };
 
@@ -231,13 +232,13 @@ function activateSettingsListeners(root, app) {
     const mentionsDisabled = !mentionEnabled?.checked;
     personalSoundSections.forEach((section) => {
       section.classList.toggle("is-disabled", usesWorldSounds);
-      section.querySelectorAll("input, button").forEach((control) => {
+      section.querySelectorAll("input, button, file-picker").forEach((control) => {
         const belongsToMentionSection = Boolean(control.closest("[data-mention-section]"));
         control.disabled = usesWorldSounds || (belongsToMentionSection && mentionsDisabled);
       });
     });
     mentionSection?.classList.toggle("is-disabled", mentionsDisabled);
-    mentionSection?.querySelectorAll("input, select, button").forEach((control) => {
+    mentionSection?.querySelectorAll("input, select, button, file-picker").forEach((control) => {
       if (!control.closest("[data-personal-sound-section]")) control.disabled = mentionsDisabled;
     });
   };
@@ -252,22 +253,6 @@ function activateSettingsListeners(root, app) {
     };
     input.addEventListener("input", updateOutput);
     updateOutput();
-  });
-
-  form.querySelectorAll("[data-file-picker]").forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      const input = form.elements.namedItem(event.currentTarget.dataset.filePicker);
-      if (!(input instanceof HTMLInputElement)) return;
-      new FilePicker({
-        type: "audio",
-        current: input.value,
-        callback: (path) => {
-          input.value = path;
-          input.dispatchEvent(new Event("change", {bubbles: true}));
-        }
-      }).render(true);
-    });
   });
 
   form.querySelectorAll("[data-test-sound]").forEach((button) => {
@@ -411,13 +396,23 @@ function isMessageForCurrentUser(message) {
 }
 
 function getCurrentUserNames() {
-  const names = [game.user?.name, game.user?.character?.name];
+  const automaticNames = [game.user?.name, game.user?.character?.name];
   const ownerLevel = CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER;
 
   if (!game.user?.isGM) {
     for (const actor of game.actors ?? []) {
-      if (actor.ownership?.[game.user.id] === ownerLevel) names.push(actor.name);
+      if (actor.ownership?.[game.user.id] === ownerLevel) automaticNames.push(actor.name);
     }
+  }
+
+  const names = [];
+  for (const value of automaticNames) {
+    const fullName = String(value ?? "").trim().replace(/^@+/, "");
+    if (!fullName) continue;
+    names.push(fullName);
+
+    const firstName = fullName.split(/\s+/u, 1)[0];
+    if (firstName !== fullName && [...firstName].length >= 2) names.push(firstName);
   }
 
   const aliases = getSetting(SETTINGS.ALIASES);
@@ -440,7 +435,7 @@ function containsRecipientName(text, name, mode) {
   const escapedName = escapeRegExp(normalizedName);
   const prefix = mode === MENTION_MODES.AT_ONLY ? "@" : "@?";
   const pattern = new RegExp(
-    `(^|[^\\p{L}\\p{N}_])${prefix}${escapedName}(?=$|[^\\p{L}\\p{N}_])`,
+    `(^|[^\\p{L}\\p{N}_])${prefix}${escapedName}`,
     "u"
   );
   return pattern.test(normalizedText);

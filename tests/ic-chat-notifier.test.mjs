@@ -34,8 +34,8 @@ globalThis.CONST = {
 };
 globalThis.canvas = {scene: {id: "scene-a"}};
 globalThis.game = {
-  user: {id: "user-a", name: "Oyuncu", isGM: false, character: {name: "Alaric"}},
-  actors: [{name: "Victoire", ownership: {"user-a": 3}}],
+  user: {id: "user-a", name: "Oyuncu", isGM: false, character: {name: "Alaric Grey"}},
+  actors: [{name: "Victoire Solenne", ownership: {"user-a": 3}}],
   i18n: {lang: "tr", localize: key => key},
   settings: {
     registerMenu: () => {},
@@ -62,6 +62,8 @@ globalThis.document = {
 
 const source = fs.readFileSync(new URL("../scripts/ic-chat-notifier.js", import.meta.url), "utf8")
   + "\nglobalThis.icnTestApi = {shouldNotify, isMessageForCurrentUser, handleIncomingMessage, getNotificationSound};";
+const templateSource = fs.readFileSync(new URL("../templates/settings.hbs", import.meta.url), "utf8");
+const styleSource = fs.readFileSync(new URL("../styles/ic-chat-notifier.css", import.meta.url), "utf8");
 vm.runInThisContext(source, {filename: "ic-chat-notifier.js"});
 hooks.init();
 
@@ -86,10 +88,12 @@ test("only incoming IC messages from the viewed scene qualify", () => {
   assert.equal(icnTestApi.shouldNotify(message({isAuthor: true})), false);
 });
 
-test("character names are matched as whole names", () => {
+test("full character names, first names, and name suffixes are detected", () => {
+  assert.equal(icnTestApi.isMessageForCurrentUser(message({content: "Merhaba Alaric Grey."})), true);
   assert.equal(icnTestApi.isMessageForCurrentUser(message({content: "Merhaba Alaric."})), true);
   assert.equal(icnTestApi.isMessageForCurrentUser(message({content: "Merhaba @Victoire!"})), true);
-  assert.equal(icnTestApi.isMessageForCurrentUser(message({content: "Victoirette geldi."})), false);
+  assert.equal(icnTestApi.isMessageForCurrentUser(message({content: "Alaricson geldi."})), true);
+  assert.equal(icnTestApi.isMessageForCurrentUser(message({content: "XAlaric geldi."})), false);
 });
 
 test("at-only mode requires the @ sign", () => {
@@ -156,4 +160,17 @@ test("players may override GM world sounds without changing detection", async ()
   assert.deepEqual(played.slice(before).map(entry => entry.sound), ["custom/player-mention.ogg"]);
   assert.equal(played.at(-1).options.volume, 0.35);
   values.set("ic-chat-notifier.useWorldSounds", true);
+});
+
+test("settings use Foundry V13 native audio file pickers", () => {
+  assert.equal(templateSource.match(/<file-picker\b[^>]*type="audio"/g)?.length, 4);
+  assert.equal(templateSource.includes("data-file-picker="), false);
+});
+
+test("settings content scrolls while the save footer remains outside the scroll area", () => {
+  const scrollEnd = templateSource.indexOf("</div>\n\n  <footer>");
+  assert.ok(templateSource.includes('class="icn-settings-scroll" data-scrollable'));
+  assert.ok(scrollEnd > 0);
+  assert.match(styleSource, /\.icn-settings-scroll\s*\{[^}]*overflow-y:\s*auto;/s);
+  assert.match(styleSource, /\.icn-settings-form footer\s*\{[^}]*flex:\s*0 0 auto;/s);
 });

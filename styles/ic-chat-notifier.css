@@ -1,12 +1,26 @@
 .icn-settings-window .window-content {
+  min-height: 0;
   padding: 0;
 }
 
 .icn-settings-form {
   display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.icn-settings-scroll {
+  display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: 14px;
+  min-height: 0;
   padding: 16px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .icn-settings-form fieldset {
@@ -135,9 +149,17 @@
 .icn-input-actions,
 .icn-volume-field {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 34px 34px;
+  grid-template-columns: minmax(0, 1fr) 34px;
   align-items: center;
   gap: 6px;
+}
+
+.icn-input-actions file-picker {
+  min-width: 0;
+}
+
+.icn-input-actions file-picker > input {
+  min-width: 0;
 }
 
 .icn-input-actions button {
@@ -163,7 +185,12 @@
 
 .icn-settings-form footer {
   display: flex;
+  flex: 0 0 auto;
   justify-content: flex-end;
+  padding: 12px 16px;
+  border-top: 1px solid var(--color-border-light-primary);
+  background: var(--color-bg-option);
+  box-shadow: 0 -5px 12px rgb(0 0 0 / 20%);
 }
 
 .icn-settings-form footer button {
