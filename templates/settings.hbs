@@ -1,0 +1,159 @@
+<form class="icn-settings-form">
+  <div class="icn-scene-rule">
+    <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+    <div>
+      <strong>{{localize "ICN.Settings.SceneRule.Title"}}</strong>
+      <span>{{localize "ICN.Settings.SceneRule.Hint"}}</span>
+    </div>
+  </div>
+
+  <label class="icn-switch-row">
+    <span>
+      <strong>{{localize "ICN.Settings.Enabled.Name"}}</strong>
+      <small>{{localize "ICN.Settings.Enabled.ShortHint"}}</small>
+    </span>
+    <input type="checkbox" name="enabled" {{#if enabled}}checked{{/if}}>
+  </label>
+
+  <label class="icn-switch-row">
+    <span>
+      <strong>{{localize "ICN.Settings.UseWorldSounds.Name"}}</strong>
+      <small>{{localize "ICN.Settings.UseWorldSounds.Hint"}}</small>
+    </span>
+    <input type="checkbox" name="useWorldSounds" {{#if useWorldSounds}}checked{{/if}}>
+  </label>
+
+  {{#if isGM}}
+  <fieldset class="icn-gm-defaults">
+    <legend><i class="fa-solid fa-crown" aria-hidden="true"></i> {{localize "ICN.Settings.WorldGroup"}}</legend>
+    <p class="icn-group-hint">{{localize "ICN.Settings.WorldGroupHint"}}</p>
+    <div class="icn-field">
+      <label for="icn-world-normal-sound">{{localize "ICN.Settings.WorldNormalSound.Name"}}</label>
+      <div class="icn-input-actions">
+        <input id="icn-world-normal-sound" type="text" name="worldNormalSound" value="{{worldNormalSound}}">
+        <button type="button" data-file-picker="worldNormalSound" data-tooltip="{{localize "ICN.Settings.Browse"}}" aria-label="{{localize "ICN.Settings.Browse"}}">
+          <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
+        </button>
+        <button type="button" data-test-world-sound="normal" data-tooltip="{{localize "ICN.Settings.Test"}}" aria-label="{{localize "ICN.Settings.Test"}}">
+          <i class="fa-solid fa-play" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <div class="icn-field icn-volume-field">
+      <label for="icn-world-normal-volume">{{localize "ICN.Settings.WorldNormalVolume.Name"}}</label>
+      <input id="icn-world-normal-volume" type="range" name="worldNormalVolume" min="0" max="1" step="0.05" value="{{worldNormalVolume}}">
+      <output data-volume-output="worldNormalVolume"></output>
+    </div>
+    <div class="icn-field">
+      <label for="icn-world-mention-sound">{{localize "ICN.Settings.WorldMentionSound.Name"}}</label>
+      <div class="icn-input-actions">
+        <input id="icn-world-mention-sound" type="text" name="worldMentionSound" value="{{worldMentionSound}}">
+        <button type="button" data-file-picker="worldMentionSound" data-tooltip="{{localize "ICN.Settings.Browse"}}" aria-label="{{localize "ICN.Settings.Browse"}}">
+          <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
+        </button>
+        <button type="button" data-test-world-sound="mention" data-tooltip="{{localize "ICN.Settings.Test"}}" aria-label="{{localize "ICN.Settings.Test"}}">
+          <i class="fa-solid fa-play" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <div class="icn-field icn-volume-field">
+      <label for="icn-world-mention-volume">{{localize "ICN.Settings.WorldMentionVolume.Name"}}</label>
+      <input id="icn-world-mention-volume" type="range" name="worldMentionVolume" min="0" max="1" step="0.05" value="{{worldMentionVolume}}">
+      <output data-volume-output="worldMentionVolume"></output>
+    </div>
+  </fieldset>
+  {{else}}
+  <div class="icn-world-summary">
+    <div>
+      <strong><i class="fa-solid fa-globe" aria-hidden="true"></i> {{localize "ICN.Settings.WorldSummary"}}</strong>
+      <span>{{localize "ICN.Settings.WorldNormalSound.Name"}}: {{worldNormalSound}}</span>
+      <span>{{localize "ICN.Settings.WorldMentionSound.Name"}}: {{worldMentionSound}}</span>
+    </div>
+    <div class="icn-summary-actions">
+      <button type="button" data-test-world-sound="normal" data-tooltip="{{localize "ICN.Settings.TestNormal"}}" aria-label="{{localize "ICN.Settings.TestNormal"}}">
+        <i class="fa-solid fa-play" aria-hidden="true"></i> {{localize "ICN.Settings.NormalShort"}}
+      </button>
+      <button type="button" data-test-world-sound="mention" data-tooltip="{{localize "ICN.Settings.TestMention"}}" aria-label="{{localize "ICN.Settings.TestMention"}}">
+        <i class="fa-solid fa-play" aria-hidden="true"></i> {{localize "ICN.Settings.MentionShort"}}
+      </button>
+    </div>
+  </div>
+  {{/if}}
+
+  <fieldset data-personal-sound-section>
+    <legend>{{localize "ICN.Settings.PersonalNormalGroup"}}</legend>
+    <p class="icn-group-hint">{{localize "ICN.Settings.PersonalSoundHint"}}</p>
+    <div class="icn-field">
+      <label for="icn-normal-sound">{{localize "ICN.Settings.NormalSound.Name"}}</label>
+      <div class="icn-input-actions">
+        <input id="icn-normal-sound" type="text" name="normalSound" value="{{normalSound}}">
+        <button type="button" data-file-picker="normalSound" data-tooltip="{{localize "ICN.Settings.Browse"}}" aria-label="{{localize "ICN.Settings.Browse"}}">
+          <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
+        </button>
+        <button type="button" data-test-sound="normal" data-tooltip="{{localize "ICN.Settings.Test"}}" aria-label="{{localize "ICN.Settings.Test"}}">
+          <i class="fa-solid fa-play" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <div class="icn-field icn-volume-field">
+      <label for="icn-normal-volume">{{localize "ICN.Settings.NormalVolume.Name"}}</label>
+      <input id="icn-normal-volume" type="range" name="normalVolume" min="0" max="1" step="0.05" value="{{normalVolume}}">
+      <output data-volume-output="normalVolume"></output>
+    </div>
+  </fieldset>
+
+  <label class="icn-switch-row">
+    <span>
+      <strong>{{localize "ICN.Settings.MentionEnabled.Name"}}</strong>
+      <small>{{localize "ICN.Settings.MentionEnabled.ShortHint"}}</small>
+    </span>
+    <input type="checkbox" name="mentionEnabled" {{#if mentionEnabled}}checked{{/if}}>
+  </label>
+
+  <fieldset data-mention-section>
+    <legend>{{localize "ICN.Settings.MentionGroup"}}</legend>
+    <div class="icn-field">
+      <label for="icn-mention-mode">{{localize "ICN.Settings.MentionMode.Name"}}</label>
+      <select id="icn-mention-mode" name="mentionMode">
+        <option value="name-or-at" {{#if nameOrAtSelected}}selected{{/if}}>{{localize "ICN.Settings.MentionMode.NameOrAt"}}</option>
+        <option value="at-only" {{#if atOnlySelected}}selected{{/if}}>{{localize "ICN.Settings.MentionMode.AtOnly"}}</option>
+      </select>
+    </div>
+    <div class="icn-field">
+      <label for="icn-aliases">{{localize "ICN.Settings.Aliases.Name"}}</label>
+      <input id="icn-aliases" type="text" name="aliases" value="{{aliases}}" placeholder="Alaric, Victoire">
+      <small>{{localize "ICN.Settings.Aliases.Hint"}}</small>
+    </div>
+    <div class="icn-detected-names">
+      <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
+      <span><strong>{{localize "ICN.Settings.DetectedNames"}}</strong> {{detectedNames}}</span>
+    </div>
+    <div data-personal-sound-section>
+      <p class="icn-group-hint">{{localize "ICN.Settings.PersonalMentionHint"}}</p>
+      <div class="icn-field">
+        <label for="icn-mention-sound">{{localize "ICN.Settings.MentionSound.Name"}}</label>
+        <div class="icn-input-actions">
+          <input id="icn-mention-sound" type="text" name="mentionSound" value="{{mentionSound}}">
+          <button type="button" data-file-picker="mentionSound" data-tooltip="{{localize "ICN.Settings.Browse"}}" aria-label="{{localize "ICN.Settings.Browse"}}">
+            <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
+          </button>
+          <button type="button" data-test-sound="mention" data-tooltip="{{localize "ICN.Settings.Test"}}" aria-label="{{localize "ICN.Settings.Test"}}">
+            <i class="fa-solid fa-play" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+      <div class="icn-field icn-volume-field">
+        <label for="icn-mention-volume">{{localize "ICN.Settings.MentionVolume.Name"}}</label>
+        <input id="icn-mention-volume" type="range" name="mentionVolume" min="0" max="1" step="0.05" value="{{mentionVolume}}">
+        <output data-volume-output="mentionVolume"></output>
+      </div>
+    </div>
+  </fieldset>
+
+  <footer>
+    <button type="submit">
+      <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+      {{localize "ICN.Settings.Save"}}
+    </button>
+  </footer>
+</form>

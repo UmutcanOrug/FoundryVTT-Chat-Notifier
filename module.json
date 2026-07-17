@@ -1,0 +1,41 @@
+{
+  "id": "ic-chat-notifier",
+  "title": "IC Chat Notifier",
+  "description": "Scene-scoped sound notifications for incoming in-character chat messages, with a distinct sound for character-name mentions.",
+  "version": "0.2.0",
+  "authors": [
+    {
+      "name": "UmutcanOrug",
+      "url": "https://github.com/UmutcanOrug"
+    }
+  ],
+  "url": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier",
+  "manifest": "https://raw.githubusercontent.com/UmutcanOrug/FoundryVTT-Chat-Notifier/main/module.json",
+  "download": "https://raw.githubusercontent.com/UmutcanOrug/FoundryVTT-Chat-Notifier/main/ic-chat-notifier-v0.2.0.zip",
+  "readme": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/blob/main/README.md",
+  "bugs": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/issues",
+  "changelog": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/blob/main/CHANGELOG.md",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13.351",
+    "maximum": "13"
+  },
+  "esmodules": [
+    "scripts/ic-chat-notifier.js"
+  ],
+  "styles": [
+    "styles/ic-chat-notifier.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    },
+    {
+      "lang": "tr",
+      "name": "Türkçe",
+      "path": "lang/tr.json"
+    }
+  ]
+}
