@@ -22,6 +22,7 @@ const MENTION_MODES = Object.freeze({
 });
 
 const processedMessages = new WeakSet();
+const streamedAudio = new Set();
 
 const {ApplicationV2, HandlebarsApplicationMixin} = foundry.applications.api;
 
@@ -328,10 +329,7 @@ async function playPreviewSound(sound, volume) {
   }
 
   try {
-    await game.audio.play(sound, {
-      context: game.audio.interface,
-      volume: Math.clamp(Number(volume) || 0, 0, 1)
-    });
+    await playConfiguredSound(sound, volume);
   } catch (error) {
     Hooks.onError(`${MODULE_ID}.playPreviewSound`, error, {log: "warn", notify: "warning"});
   }
@@ -349,16 +347,68 @@ async function handleIncomingMessage(message) {
     const {sound, volume} = getNotificationSound(isMention);
 
     if (!sound) return;
-    await game.audio.play(sound, {
-      context: game.audio.interface,
-      volume: Math.clamp(Number(volume) || 0, 0, 1)
-    });
+    await playConfiguredSound(sound, volume);
   } catch (error) {
     Hooks.onError(`${MODULE_ID}.handleIncomingMessage`, error, {
       log: "warn",
       notify: null
     });
   }
+}
+
+async function playConfiguredSound(sound, volume) {
+  const source = String(sound ?? "").trim();
+  const normalizedVolume = Math.clamp(Number(volume) || 0, 0, 1);
+  if (isRemoteSoundSource(source)) return playStreamedRemoteSound(source, normalizedVolume);
+
+  const result = await game.audio.play(source, {
+    context: game.audio.interface,
+    volume: normalizedVolume
+  });
+  if (result?.failed) throw new Error(`Failed to play audio source "${source}"`);
+  return result;
+}
+
+function isRemoteSoundSource(source) {
+  try {
+    const url = new URL(source);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch (_error) {
+    return false;
+  }
+}
+
+async function playStreamedRemoteSound(source, volume) {
+  const audio = new Audio(source);
+  audio.preload = "auto";
+  audio.playsInline = true;
+  audio.volume = getStreamedInterfaceVolume(volume);
+
+  const release = () => streamedAudio.delete(audio);
+  audio.addEventListener("ended", release, {once: true});
+  audio.addEventListener("error", release, {once: true});
+  streamedAudio.add(audio);
+
+  try {
+    await audio.play();
+    return audio;
+  } catch (error) {
+    release();
+    throw error;
+  }
+}
+
+function getStreamedInterfaceVolume(volume) {
+  if (game.audio.globalMute) return 0;
+
+  let interfaceVolume = 1;
+  try {
+    const configuredVolume = Number(game.settings.get("core", "globalInterfaceVolume"));
+    if (Number.isFinite(configuredVolume)) interfaceVolume = configuredVolume;
+  } catch (_error) {
+    // Keep full interface volume if the core setting is unavailable during initialization.
+  }
+  return Math.clamp(volume * interfaceVolume, 0, 1);
 }
 
 function getNotificationSound(isMention) {

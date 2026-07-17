@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2
+
+- Forge Assets gibi `http/https` ses bağlantıları, uzun MP3 dosyalarının tamamen indirilip çözülmesini beklemeden doğrudan akış olarak oynatılır.
+- Harici sesler hem ayarlardaki deneme düğmesinde hem de gerçek IC bildirimlerinde aynı oynatma yolunu kullanır.
+- Harici ses akışlarında Foundry'nin genel arayüz ses seviyesi ve genel sessize alma durumu uygulanır.
+
 ## 0.2.1
 
 - Ayar penceresine her ekran boyutunda çalışan kaydırılabilir içerik ve daima görünür kayıt alanı eklendi.

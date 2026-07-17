@@ -33,6 +33,8 @@ Kullanıcıya özel seçenekler **Oyun Ayarları > Ayarları Yapılandır > IC C
 
 Ses alanlarındaki dosya düğmesi Foundry VTT'nin yerleşik ses seçicisini açar; `Data` klasörüne yüklediğiniz desteklenen ses dosyalarını buradan seçebilirsiniz. Kayıt düğmesi pencerenin altında sabit kalırken ayar içeriği kaydırılabilir.
 
+Forge Assets gibi tam `https://` bağlantıları da kullanılabilir. Harici sesler doğrudan akış olarak oynatıldığı için uzun MP3 dosyalarında tüm dosyanın önceden çözülmesi beklenmez.
+
 GM aynı pencerede taç simgeli **GM dünya varsayılanları** bölümünü görür. Oyuncular bu bölümün salt okunur özetini ve ses deneme düğmelerini görür.
 
 ## Geliştirme kontrolleri

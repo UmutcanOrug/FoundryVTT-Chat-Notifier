@@ -7,6 +7,7 @@ const hooks = {};
 const registered = new Map();
 const values = new Map();
 const played = [];
+const streamed = [];
 
 Math.clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
@@ -21,6 +22,20 @@ globalThis.foundry = {
       ApplicationV2: MockApplicationV2,
       HandlebarsApplicationMixin: Base => class extends Base {}
     }
+  }
+};
+globalThis.Audio = class MockAudio {
+  constructor(source) {
+    this.src = source;
+    this.volume = 1;
+    this.played = false;
+    streamed.push(this);
+  }
+
+  addEventListener() {}
+
+  async play() {
+    this.played = true;
   }
 };
 globalThis.Hooks = {
@@ -47,6 +62,7 @@ globalThis.game = {
   },
   audio: {
     interface: {},
+    globalMute: false,
     play: async (sound, options) => played.push({sound, options})
   }
 };
@@ -160,6 +176,24 @@ test("players may override GM world sounds without changing detection", async ()
   assert.deepEqual(played.slice(before).map(entry => entry.sound), ["custom/player-mention.ogg"]);
   assert.equal(played.at(-1).options.volume, 0.35);
   values.set("ic-chat-notifier.useWorldSounds", true);
+});
+
+test("remote Forge audio is streamed once instead of being decoded as a local sound", async () => {
+  const remoteSound = "https://assets.forge-vtt.com/62f57b3e2579d0a019e346d6/Firebrand%20Judgement.mp3";
+  values.set("ic-chat-notifier.worldMentionSound", remoteSound);
+  values.set("ic-chat-notifier.worldMentionVolume", 0.65);
+  const beforeLocal = played.length;
+  const beforeStreamed = streamed.length;
+
+  await icnTestApi.handleIncomingMessage(message({content: "@Alaric"}));
+
+  assert.equal(played.length, beforeLocal);
+  assert.equal(streamed.length - beforeStreamed, 1);
+  assert.equal(streamed.at(-1).src, remoteSound);
+  assert.equal(streamed.at(-1).volume, 0.65);
+  assert.equal(streamed.at(-1).played, true);
+  values.delete("ic-chat-notifier.worldMentionSound");
+  values.delete("ic-chat-notifier.worldMentionVolume");
 });
 
 test("settings use Foundry V13 native audio file pickers", () => {

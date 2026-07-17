@@ -2,7 +2,7 @@
   "id": "ic-chat-notifier",
   "title": "IC Chat Notifier",
   "description": "Scene-scoped sound notifications for incoming in-character chat messages, with a distinct sound for character-name mentions.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "authors": [
     {
       "name": "UmutcanOrug",
@@ -11,7 +11,7 @@
   ],
   "url": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier",
   "manifest": "https://raw.githubusercontent.com/UmutcanOrug/FoundryVTT-Chat-Notifier/main/module.json",
-  "download": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/releases/download/v0.2.1/ic-chat-notifier-v0.2.1.zip",
+  "download": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/releases/download/v0.2.2/ic-chat-notifier-v0.2.2.zip",
   "readme": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/blob/main/README.md",
   "bugs": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/issues",
   "changelog": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/blob/main/CHANGELOG.md",
