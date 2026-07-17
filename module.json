@@ -11,7 +11,7 @@
   ],
   "url": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier",
   "manifest": "https://raw.githubusercontent.com/UmutcanOrug/FoundryVTT-Chat-Notifier/main/module.json",
-  "download": "https://raw.githubusercontent.com/UmutcanOrug/FoundryVTT-Chat-Notifier/main/ic-chat-notifier-v0.2.0.zip",
+  "download": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/releases/download/v0.2.0/ic-chat-notifier-v0.2.0.zip",
   "readme": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/blob/main/README.md",
   "bugs": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/issues",
   "changelog": "https://github.com/UmutcanOrug/FoundryVTT-Chat-Notifier/blob/main/CHANGELOG.md",
